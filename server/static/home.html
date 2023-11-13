@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>PathFinderAi</title>
+    </head>   
+    <body>
+        <div id="pane"></div>
+    </body>
+    <script>
+        let socket = new WebSocket("ws:localhost:3000/ws")
+        socket.onmessage = (event) => {
+            lines = event.data.split("\n")
+            map = lines.join('')
+            let pane = document.getElementById("pane")
+            pane.innerHTML = '';
+            pane.style.cssText = "display: grid; grid-template-columns: repeat("+lines[0].length+", 60px);"
+            for(let i = 0; i < map.length; i++){
+                current = map.charAt(i)
+                let div = document.createElement("div");
+                color = "#153054"
+                switch (current) {
+                    case "0": 
+                        color = "#abdbe3"
+                        break
+                    case "4": 
+                        color = "#fb6c7e"
+                        break
+                    case "7": 
+                        color = "#1ffd08"
+                        break
+                }
+                div.style.cssText = "width: 60px; height: 60px; background-color: " + color + ";"
+                pane.appendChild(div)
+            }
+        }
+    </script>
+</html>
